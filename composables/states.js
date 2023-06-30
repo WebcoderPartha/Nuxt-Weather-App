@@ -5,3 +5,7 @@ export const useLocationState = () => {
 export const useCurrentWeatherState = () => {
     return useState(()=> '')
 }
+
+export const useForeCast = () => {
+    return useState(()=> '')
+}

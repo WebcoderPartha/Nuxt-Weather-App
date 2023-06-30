@@ -1,5 +1,5 @@
 <template>
-  <section class="dark:bg-gray-800 dark:text-gray-100 h-[830px]">
+  <section class="dark:bg-gray-800 dark:text-gray-100 min-h-[830px] pb-8">
     <h2 class="text-center font-bold text-5xl font-mono pt-8 mb-6">
       Weather App
       <!-- {{ idstate }} -->
@@ -29,7 +29,9 @@
       </div>
     </form>
 
-    <article class="max-w-[800px] mx-auto dark:shadow-gray-500 shadow-md mt-28 p-4" v-if="currentWeather">
+    <div class="grid grid-cols-2">
+
+    <article class="max-w-[800px] mx-auto dark:shadow-gray-500 shadow-md mt-28 py-8" v-if="currentWeather">
         <div class="text-center p-4">
             <h2 class="text-4xl">{{ currentWeather.location?.name }}, {{ currentWeather.location?.region }}, {{ currentWeather.location?.country }}</h2>
         </div>
@@ -41,7 +43,7 @@
                 
             </div>
             <div>
-                <div class="weather-right pt-5">
+                <div class="weather-right pt-5 text-right pr-10">
                     <h3 class="text-xl mb-2">Wind: {{ currentWeather.current?.wind_kph }} kmph</h3>
                     <h3 class="text-xl mb-2">Precip: {{ currentWeather.current?.precip_mm }} kmph</h3>
                     <h3 class="text-xl mb-2">Pressure: {{ currentWeather.current?.pressure_mb }} kmph</h3>
@@ -51,6 +53,26 @@
         </div>
 
     </article>
+
+    <article class="max-w-[800px] mx-auto dark:shadow-gray-500 shadow-md mt-28 py-8" v-if="currentWeather">
+        <div class="text-center p-4">
+            <h2 class="text-4xl">Forecast Days</h2>
+        </div>
+        <div class="grid grid-cols-4 gap-2 text-center">
+            <div v-for="forcast in getForeCast" class="text-center">
+                <p class="">{{ forcast.date }}</p>
+                
+                    <img :src="forcast.day?.condition.icon" class="ml-24" width="80" alt="">
+                
+                <p class="text-center">{{ forcast.day?.condition.text }}</p>
+                <p class="text-center">{{ forcast.day?.maxtemp_c }}</p>
+                
+            </div>
+       
+        </div>
+
+    </article>
+</div>
 
   </section>
 </template>
@@ -73,11 +95,13 @@ const onChangeLocation = async () => {
   const { data:weatherLocation, error  } = await useFetch(
     `http://api.weatherapi.com/v1/search.json?key=${sicretKey}&q=${query.value}&aqi=yes`
   );
-  console.log(weatherLocation.value)
 
   locationState.value = weatherLocation.value
 
 };
+// End Weather Location
+
+
 
 // Get Current Weather
 const getWeatherHandle = async (e) => {
@@ -88,21 +112,23 @@ const getWeatherHandle = async (e) => {
     locationState.value = []
     query.value = ''
     currentWeather.value = weatherResult.value
-    
 
 }
-
+// End Get Current Weather
 
 // User IP Address
 const {data:userIp} = await useFetch('https://api.ipify.org/?format=json')
-
 const {data: userIpDetail} = await useFetch(`http://ip-api.com/json/${userIp.value.ip}`)
-
-console.log(userIpDetail.value)
 const { data:userCurrentWeather, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&aqi=yes`);
-
 currentWeather.value = userCurrentWeather.value
 
+const {data:forecastData} = await useFetch(`https://api.weatherapi.com/v1/forecast.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&days=3&aqi=no&alerts=no`)
+console.log(forecastData.value.forecast.forecastday)
+const getForeCast = useForeCast()
+getForeCast.value = forecastData.value.forecast.forecastday
+
+
+// End User IP Address
 
 
 </script>
