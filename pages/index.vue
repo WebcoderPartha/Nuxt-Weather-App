@@ -3,7 +3,7 @@
     <h2 class="text-center font-bold text-5xl font-mono pt-8 mb-6">
       Weather App
     </h2>
-    {{ locationState }}
+ 
     <form @submit.prevent="onChangeLocation">
       <div class="max-w-[600px] mx-auto grid grid-cols-4 gap-3 overflow-hidden">
         <input
@@ -27,6 +27,29 @@
        
       </div>
     </form>
+
+    <article class="max-w-[800px] mx-auto dark:shadow-gray-500 shadow-md mt-28 p-4" v-if="currentWeather">
+        <div class="text-center p-4">
+            <h2 class="text-4xl">{{ currentWeather.location?.name }}, {{ currentWeather.location?.region }}, {{ currentWeather.location?.country }}</h2>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                
+                <img :src="currentWeather.current?.condition.icon" class="ml-10" width="150" alt="">
+                <span class="text-2xl ml-24">{{ currentWeather.current?.condition.text }}</span>
+                
+            </div>
+            <div>
+                <div class="weather-right pt-5">
+                    <h3 class="text-xl mb-2">Wind: {{ currentWeather.current?.wind_kph }} kmph</h3>
+                    <h3 class="text-xl mb-2">Precip: {{ currentWeather.current?.precip_mm }} kmph</h3>
+                    <h3 class="text-xl mb-2">Pressure: {{ currentWeather.current?.pressure_mb }} kmph</h3>
+                    <h1 class="text-4xl">{{ currentWeather.current?.temp_c }} °c</h1>
+                </div>
+            </div>
+        </div>
+
+    </article>
   </section>
 </template>
 
@@ -39,8 +62,10 @@ const query = ref('')
 const getError = ref('')
 
 const locationState = useLocationState()
+const currentWeather = useCurrentWeatherState()
 
 
+// Get Weather Location
 const onChangeLocation = async () => {
       
   const { data:weatherLocation, error  } = await useFetch(
@@ -52,15 +77,22 @@ const onChangeLocation = async () => {
 
 };
 
+// Get Current Weather
 const getWeatherHandle = async (e) => {
     const city = e.target.getAttribute('data-city')
     const region = e.target.getAttribute('data-region')
     const country = e.target.getAttribute('data-country')
     const { data:weatherResult, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${city},${region},{country}&aqi=yes`);
     locationState.value = []
+    query.value = ''
+    currentWeather.value = weatherResult.value
     console.log(weatherResult.value)
 
 }
+
+
+
 </script>
+
 
 <style lang="scss" scoped></style>
