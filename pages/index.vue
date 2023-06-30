@@ -2,6 +2,7 @@
   <section class="dark:bg-gray-800 dark:text-gray-100 h-[830px]">
     <h2 class="text-center font-bold text-5xl font-mono pt-8 mb-6">
       Weather App
+      <!-- {{ idstate }} -->
     </h2>
  
     <form @submit.prevent="onChangeLocation">
@@ -50,6 +51,7 @@
         </div>
 
     </article>
+
   </section>
 </template>
 
@@ -82,13 +84,24 @@ const getWeatherHandle = async (e) => {
     const city = e.target.getAttribute('data-city')
     const region = e.target.getAttribute('data-region')
     const country = e.target.getAttribute('data-country')
-    const { data:weatherResult, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${city},${region},{country}&aqi=yes`);
+    const { data:weatherResult, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${city},${region},${country}&aqi=yes`);
     locationState.value = []
     query.value = ''
     currentWeather.value = weatherResult.value
-    console.log(weatherResult.value)
+    
 
 }
+
+
+// User IP Address
+const {data:userIp} = await useFetch('https://api.ipify.org/?format=json')
+
+const {data: userIpDetail} = await useFetch(`http://ip-api.com/json/${userIp.value.ip}`)
+
+console.log(userIpDetail.value)
+const { data:userCurrentWeather, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&aqi=yes`);
+
+currentWeather.value = userCurrentWeather.value
 
 
 
