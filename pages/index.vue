@@ -22,7 +22,7 @@
         
         <!-- {{ getData }} -->
         <div v-if="locationState.length > 0" class="relative -top-3 w-[450px] dark:bg-gray-700  dark:text-white p-5">
-            <h2 @click="getWeatherHandle" class="hover:bg-blue-700 hover:text-white py-1 px-1 text-center cursor-pointer" v-for="location in locationState">{{ location.name }}, {{ location.region }}, {{ location.country }}</h2>
+            <h2 @click="getWeatherHandle" :data-city="location.name" :data-region="location.region" :data-country="location.country" class="hover:bg-blue-700 hover:text-white py-1 px-1 text-center cursor-pointer" v-for="location in locationState">{{ location.name }}, {{ location.region }}, {{ location.country }}</h2>
         </div>
        
       </div>
@@ -52,8 +52,14 @@ const onChangeLocation = async () => {
 
 };
 
-const getWeatherHandle = (e) => {
-    
+const getWeatherHandle = async (e) => {
+    const city = e.target.getAttribute('data-city')
+    const region = e.target.getAttribute('data-region')
+    const country = e.target.getAttribute('data-country')
+    const { data:weatherResult, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${city},${region},{country}&aqi=yes`);
+    locationState.value = []
+    console.log(weatherResult.value)
+
 }
 </script>
 
