@@ -1,5 +1,5 @@
 <template>
-  <section class="dark:bg-gray-800 dark:text-gray-100 min-h-[830px] pb-8">
+  <section class="bg-gray-800 text-gray-100 min-h-[830px] pb-8">
     <h2 class="text-center font-bold md:text-5xl text-3xl font-mono pt-8 mb-6">
       Weather App
       <!-- {{ idstate }} -->
@@ -16,14 +16,18 @@
         />
         <button
           type="submit"
-          class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 font-medium rounded-full text-sm md:px-5 px py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+          class="border  focus:outline-non focus:ring-4 font-medium rounded-full text-sm md:px-5 px py-2.5 mr-2 mb-2 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-600 focus:ring-gray-700"
         >
           Search
         </button>
         
         <!-- {{ getData }} -->
-        <div v-if="locationState?.length > 0" class="relative -top-3 w-[450px] dark:bg-gray-700  dark:text-white p-5">
-            <h2 @click="getWeatherHandle" :data-city="location.name" :data-region="location.region" :data-country="location.country" class="hover:bg-blue-700 hover:text-white py-1 px-1 text-center cursor-pointer" v-for="location in locationState">{{ location.name }}, {{ location.region }}, {{ location.country }}</h2>
+        <div v-if="locationState?.length > 0" class="relative -top-3 w-[450px] bg-gray-700  text-white p-5">
+          <div v-for="location in locationState">
+
+            <h2 @click="getWeatherHandle" :data-city="location.name" :data-region="location.region" :data-country="location.country" class="hover:bg-blue-700 hover:text-white py-1 px-1 text-center cursor-pointer" v-if="location?.region">{{ location.name }}, {{ location.region }}, {{ location.country }}</h2>
+            <h2 @click="getWeatherHandle" :data-city="location.name" :data-region="location.region" :data-country="location.country" class="hover:bg-blue-700 hover:text-white py-1 px-1 text-center cursor-pointer" v-else>{{ location.name }}, {{ location.country }}</h2>
+          </div>
         </div>
        
       </div>
@@ -35,7 +39,7 @@
     <h2 class="md:text-2xl text-sx text-center pb-4 mb-4">{{ moment(currentWeather.location?.localtime).format('DD MMMM, Y') }} | {{ moment(currentWeather.location?.localtime).format("hh:mm A") }}</h2>
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-    <article class="md:mx-auto dark:shadow-gray-500 shadow-md md:py-8 mx-3" v-if="currentWeather">
+    <article class="md:mx-auto shadow-gray-500 shadow-md md:py-8 mx-3" v-if="currentWeather">
       
         <div class="text-center p-4 mb-6">
             <h2 class="md:text-3xl text-2xl font-thin">Today Weather</h2>
@@ -59,7 +63,7 @@
 
     </article>
 
-    <article class="dark:shadow-gray-500 shadow-md md:py-8 mx-3 pb-4 md:pb-0" v-if="currentWeather">
+    <article class="shadow-gray-500 shadow-md md:py-8 mx-3 pb-4 md:pb-0" v-if="currentWeather">
         <div class="text-center p-4 mb-6">
             <h2 class="md:text-3xl text-2xl font-thin">Forecast Days</h2>
         </div>
