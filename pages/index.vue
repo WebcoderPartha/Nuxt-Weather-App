@@ -36,7 +36,7 @@
     <div class="grid grid-cols-2 gap-6">
     <article class="mx-auto dark:shadow-gray-500 shadow-md py-8" v-if="currentWeather">
       
-        <div class="text-center p-4">
+        <div class="text-center p-4 mb-6">
             <h2 class="text-3xl font-thin">Current Weather</h2>
         </div>
         <div class="grid grid-cols-2 gap-4">
@@ -59,13 +59,13 @@
     </article>
 
     <article class="dark:shadow-gray-500 shadow-md py-8" v-if="currentWeather">
-        <div class="text-center p-4">
+        <div class="text-center p-4 mb-6">
             <h2 class="text-3xl font-thin">Forecast Days</h2>
         </div>
         <div class="grid grid-cols-3 gap-2 text-center">
             <div v-for="forcast in getForeCast" class="text-center">
-                <p class="text-center">{{ forcast.date }}</p>
-                
+                <p class="text-center"> {{  moment(forcast.date).format('dddd') }}</p>
+             
                     <img :src="forcast.day?.condition.icon" class="ml-14" width="80" alt="">
                 
                 <p class="text-center">{{ forcast.day?.condition.text }}</p>
@@ -84,6 +84,7 @@
 </template>
 
 <script setup>
+import moment from 'moment';
 
 const sicretKey = useRuntimeConfig().public.weatherApi
 
