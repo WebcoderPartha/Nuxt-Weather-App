@@ -84,6 +84,10 @@
 </template>
 
 <script setup>
+useHead({
+  title: 'Weather App'
+})
+
 import moment from 'moment';
 
 const sicretKey = useRuntimeConfig().public.weatherApi
