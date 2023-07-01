@@ -33,7 +33,7 @@
     <h2 class="text-4xl text-center pb-4" v-if="currentWeather.location?.region">{{ currentWeather.location?.name }}, {{ currentWeather.location?.region }}, {{ currentWeather.location?.country }}</h2>
     <h2 class="text-4xl text-center pb-4" v-else>{{ currentWeather.location?.name }}, {{ currentWeather.location?.country }}</h2>
 
-    <div class="grid grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
     <article class="mx-auto dark:shadow-gray-500 shadow-md py-8" v-if="currentWeather">
       
         <div class="text-center p-4 mb-6">
@@ -43,7 +43,7 @@
             <div>
                 
                 <img :src="currentWeather.current?.condition.icon" class="ml-10" width="150" alt="">
-                <span class="text-2xl ml-24">{{ currentWeather.current?.condition.text }}</span>
+                <span class="text-md ml-10">{{ currentWeather.current?.condition.text }}</span>
                 
             </div>
             <div>
@@ -66,7 +66,7 @@
             <div v-for="forcast in getForeCast" class="text-center">
                 <p class="text-center"> {{  moment(forcast.date).format('dddd') }}</p>
              
-                    <img :src="forcast.day?.condition.icon" class="ml-14" width="80" alt="">
+                    <img :src="forcast.day?.condition.icon" class="ml-6 md:ml-14" width="80" alt="">
                 
                 <p class="text-center">{{ forcast.day?.condition.text }}</p>
                 <p class="text-center">{{ forcast.day?.maxtemp_c }} °c</p>
