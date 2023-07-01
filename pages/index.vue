@@ -32,12 +32,13 @@
     <div class="max-w-[1200px] mx-auto weather-container mt-20">
     <h2 class="text-4xl text-center pb-4" v-if="currentWeather.location?.region">{{ currentWeather.location?.name }}, {{ currentWeather.location?.region }}, {{ currentWeather.location?.country }}</h2>
     <h2 class="text-4xl text-center pb-4" v-else>{{ currentWeather.location?.name }}, {{ currentWeather.location?.country }}</h2>
+    <h2 class="text-2xl text-center pb-4 mb-4">{{ moment(currentWeather.location?.localtime).format('DD MMMM, Y') }} | {{ moment(currentWeather.location?.localtime).format("hh:mm A") }}</h2>
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
     <article class="mx-auto dark:shadow-gray-500 shadow-md py-8" v-if="currentWeather">
       
         <div class="text-center p-4 mb-6">
-            <h2 class="text-3xl font-thin">Current Weather</h2>
+            <h2 class="text-3xl font-thin">Today Weather</h2>
         </div>
         <div class="grid grid-cols-2 gap-4">
             <div>
