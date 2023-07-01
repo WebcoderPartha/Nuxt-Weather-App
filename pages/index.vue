@@ -29,11 +29,15 @@
       </div>
     </form>
 
-    <div class="grid grid-cols-2">
+    <div class="max-w-[1200px] mx-auto weather-container mt-20">
+    <h2 class="text-4xl text-center pb-4" v-if="currentWeather.location?.region">{{ currentWeather.location?.name }}, {{ currentWeather.location?.region }}, {{ currentWeather.location?.country }}</h2>
+    <h2 class="text-4xl text-center pb-4" v-else>{{ currentWeather.location?.name }}, {{ currentWeather.location?.country }}</h2>
 
-    <article class="max-w-[800px] mx-auto dark:shadow-gray-500 shadow-md mt-28 py-8" v-if="currentWeather">
+    <div class="grid grid-cols-2 gap-6">
+    <article class="mx-auto dark:shadow-gray-500 shadow-md py-8" v-if="currentWeather">
+      
         <div class="text-center p-4">
-            <h2 class="text-4xl">{{ currentWeather.location?.name }}, {{ currentWeather.location?.region }}, {{ currentWeather.location?.country }}</h2>
+            <h2 class="text-3xl font-thin">Current Weather</h2>
         </div>
         <div class="grid grid-cols-2 gap-4">
             <div>
@@ -54,24 +58,26 @@
 
     </article>
 
-    <article class="max-w-[800px] mx-auto dark:shadow-gray-500 shadow-md mt-28 py-8" v-if="currentWeather">
+    <article class="dark:shadow-gray-500 shadow-md py-8" v-if="currentWeather">
         <div class="text-center p-4">
-            <h2 class="text-4xl">Forecast Days</h2>
+            <h2 class="text-3xl font-thin">Forecast Days</h2>
         </div>
-        <div class="grid grid-cols-4 gap-2 text-center">
+        <div class="grid grid-cols-3 gap-2 text-center">
             <div v-for="forcast in getForeCast" class="text-center">
-                <p class="">{{ forcast.date }}</p>
+                <p class="text-center">{{ forcast.date }}</p>
                 
-                    <img :src="forcast.day?.condition.icon" class="ml-24" width="80" alt="">
+                    <img :src="forcast.day?.condition.icon" class="ml-14" width="80" alt="">
                 
                 <p class="text-center">{{ forcast.day?.condition.text }}</p>
-                <p class="text-center">{{ forcast.day?.maxtemp_c }}</p>
+                <p class="text-center">{{ forcast.day?.maxtemp_c }} °c</p>
                 
             </div>
        
         </div>
 
     </article>
+
+    </div>
 </div>
 
   </section>
