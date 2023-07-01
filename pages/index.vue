@@ -110,7 +110,7 @@ const currentWeather = useCurrentWeatherState()
 const onChangeLocation = async () => {
       
   const { data:weatherLocation, error  } = await useFetch(
-    `http://api.weatherapi.com/v1/search.json?key=${sicretKey}&q=${query.value}&aqi=yes`
+    `https://api.weatherapi.com/v1/search.json?key=${sicretKey}&q=${query.value}&aqi=yes`
   );
 
   locationState.value = weatherLocation.value
@@ -126,7 +126,7 @@ const getWeatherHandle = async (e) => {
     const city = e.target.getAttribute('data-city')
     const region = e.target.getAttribute('data-region')
     const country = e.target.getAttribute('data-country')
-    const { data:weatherResult, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${city},${region},${country}&aqi=yes`);
+    const { data:weatherResult, error, refresh} = await useFetch(`https://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${city},${region},${country}&aqi=yes`);
     locationState.value = []
     query.value = ''
     currentWeather.value = weatherResult.value
