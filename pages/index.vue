@@ -134,16 +134,16 @@ const getWeatherHandle = async (e) => {
 }
 // End Get Current Weather
 
-// // User IP Address
-// const {data:userIp} = await useFetch('https://api.ipify.org/?format=json')
-// const {data: userIpDetail} = await useFetch(`http://ip-api.com/json/${userIp.value.ip}`)
-// const { data:userCurrentWeather, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&aqi=yes`);
-// currentWeather.value = userCurrentWeather.value
+// User IP Address
+const {data:userIp} = await useFetch('https://api.ipify.org/?format=json')
+const {data: userIpDetail} = await useFetch(`http://ip-api.com/json/${userIp.value.ip}`)
+const { data:userCurrentWeather, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&aqi=yes`);
+currentWeather.value = userCurrentWeather.value
 
-// const {data:forecastData} = await useFetch(`https://api.weatherapi.com/v1/forecast.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&days=3&aqi=no&alerts=no`)
-// console.log(forecastData.value.forecast?.forecastday)
-// const getForeCast = useForeCast()
-// getForeCast.value = forecastData.value.forecast.forecastday
+const {data:forecastData} = await useFetch(`https://api.weatherapi.com/v1/forecast.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&days=3&aqi=no&alerts=no`)
+
+const getForeCast = useForeCast()
+getForeCast.value = forecastData.value.forecast?.forecastday
 
 
 // End User IP Address
