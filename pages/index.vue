@@ -1,12 +1,12 @@
 <template>
   <section class="dark:bg-gray-800 dark:text-gray-100 min-h-[830px] pb-8">
-    <h2 class="text-center font-bold text-5xl font-mono pt-8 mb-6">
+    <h2 class="text-center font-bold md:text-5xl text-3xl font-mono pt-8 mb-6">
       Weather App
       <!-- {{ idstate }} -->
     </h2>
  
     <form @submit.prevent="onChangeLocation">
-      <div class="max-w-[600px] mx-auto grid grid-cols-4 gap-3 overflow-hidden">
+      <div class="max-w-[600px] mx-auto grid grid-cols-4 gap-3 overflow-hidden px-5 md:px-0">
         <input
           type="text"
           id="first_name"
@@ -30,38 +30,38 @@
     </form>
 
     <div class="max-w-[1200px] mx-auto weather-container mt-20">
-    <h2 class="text-4xl text-center pb-4" v-if="currentWeather.location?.region">{{ currentWeather.location?.name }}, {{ currentWeather.location?.region }}, {{ currentWeather.location?.country }}</h2>
-    <h2 class="text-4xl text-center pb-4" v-else>{{ currentWeather.location?.name }}, {{ currentWeather.location?.country }}</h2>
-    <h2 class="text-2xl text-center pb-4 mb-4">{{ moment(currentWeather.location?.localtime).format('DD MMMM, Y') }} | {{ moment(currentWeather.location?.localtime).format("hh:mm A") }}</h2>
+    <h2 class="md:text-4xl text-2xl text-center pb-4" v-if="currentWeather.location?.region">{{ currentWeather.location?.name }}, {{ currentWeather.location?.region }}, {{ currentWeather.location?.country }}</h2>
+    <h2 class="md:text-4xl text-2xl text-center pb-4" v-else>{{ currentWeather.location?.name }}, {{ currentWeather.location?.country }}</h2>
+    <h2 class="md:text-2xl text-sx text-center pb-4 mb-4">{{ moment(currentWeather.location?.localtime).format('DD MMMM, Y') }} | {{ moment(currentWeather.location?.localtime).format("hh:mm A") }}</h2>
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-    <article class="mx-auto dark:shadow-gray-500 shadow-md py-8" v-if="currentWeather">
+    <article class="md:mx-auto dark:shadow-gray-500 shadow-md md:py-8 mx-3" v-if="currentWeather">
       
         <div class="text-center p-4 mb-6">
-            <h2 class="text-3xl font-thin">Today Weather</h2>
+            <h2 class="md:text-3xl text-2xl font-thin">Today Weather</h2>
         </div>
         <div class="grid grid-cols-2 gap-4">
             <div>
                 
-                <img :src="currentWeather.current?.condition.icon" class="ml-10" width="150" alt="">
-                <span class="text-md ml-10">{{ currentWeather.current?.condition.text }}</span>
+                <img :src="currentWeather.current?.condition.icon" class="ml-10 md:w-28" alt="">
+                <span class="text-md md:ml-10 px-4">{{ currentWeather.current?.condition.text }}</span>
                 
             </div>
             <div>
-                <div class="weather-right pt-5 text-right pr-10">
-                    <h3 class="text-xl mb-2">Wind: {{ currentWeather.current?.wind_kph }} kmph</h3>
-                    <h3 class="text-xl mb-2">Precip: {{ currentWeather.current?.precip_mm }} kmph</h3>
-                    <h3 class="text-xl mb-2">Pressure: {{ currentWeather.current?.pressure_mb }} kmph</h3>
-                    <h1 class="text-4xl">{{ currentWeather.current?.temp_c }} °c</h1>
+                <div class="weather-right pt-5 text-right pr-10 pb-4 md:pb-0">
+                    <h3 class="md:text-xl text-sm mb-2">Wind: {{ currentWeather.current?.wind_kph }} kmph</h3>
+                    <h3 class="tmd:text-xl text-sm mb-2">Precip: {{ currentWeather.current?.precip_mm }} kmph</h3>
+                    <h3 class="tmd:text-xl text-sm mb-2">Pressure: {{ currentWeather.current?.pressure_mb }} kmph</h3>
+                    <h1 class="md:text-4xl text-2xl">{{ currentWeather.current?.temp_c }} °c</h1>
                 </div>
             </div>
         </div>
 
     </article>
 
-    <article class="dark:shadow-gray-500 shadow-md py-8" v-if="currentWeather">
+    <article class="dark:shadow-gray-500 shadow-md md:py-8 mx-3 pb-4 md:pb-0" v-if="currentWeather">
         <div class="text-center p-4 mb-6">
-            <h2 class="text-3xl font-thin">Forecast Days</h2>
+            <h2 class="md:text-3xl text-2xl font-thin">Forecast Days</h2>
         </div>
         <div class="grid grid-cols-3 gap-2 text-center">
             <div v-for="forcast in getForeCast" class="text-center">
@@ -80,6 +80,11 @@
 
     </div>
 </div>
+
+  <div class="max-w-[600px] mx-auto mt-20 text-center">
+    <h3 class=" from-neutral-300">Design & Developed by <br/><span class=" font-bold">Parthadeb Mondal</span></h3>
+    <p class="text-center">Version 1.0.0</p>
+  </div>
 
   </section>
 </template>
