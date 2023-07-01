@@ -22,7 +22,7 @@
         </button>
         
         <!-- {{ getData }} -->
-        <div v-if="locationState.length > 0" class="relative -top-3 w-[450px] dark:bg-gray-700  dark:text-white p-5">
+        <div v-if="locationState?.length > 0" class="relative -top-3 w-[450px] dark:bg-gray-700  dark:text-white p-5">
             <h2 @click="getWeatherHandle" :data-city="location.name" :data-region="location.region" :data-country="location.country" class="hover:bg-blue-700 hover:text-white py-1 px-1 text-center cursor-pointer" v-for="location in locationState">{{ location.name }}, {{ location.region }}, {{ location.country }}</h2>
         </div>
        
@@ -114,6 +114,7 @@ const onChangeLocation = async () => {
   );
 
   locationState.value = weatherLocation.value
+
 
 };
 // End Weather Location
