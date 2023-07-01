@@ -29,7 +29,7 @@
       </div>
     </form>
 
-    <div class="max-w-[1200px] mx-auto weather-container mt-20">
+    <div class="max-w-[1200px] mx-auto weather-container mt-20" v-if="currentWeather">
     <h2 class="md:text-4xl text-2xl text-center pb-4" v-if="currentWeather.location?.region">{{ currentWeather.location?.name }}, {{ currentWeather.location?.region }}, {{ currentWeather.location?.country }}</h2>
     <h2 class="md:text-4xl text-2xl text-center pb-4" v-else>{{ currentWeather.location?.name }}, {{ currentWeather.location?.country }}</h2>
     <h2 class="md:text-2xl text-sx text-center pb-4 mb-4">{{ moment(currentWeather.location?.localtime).format('DD MMMM, Y') }} | {{ moment(currentWeather.location?.localtime).format("hh:mm A") }}</h2>
@@ -133,16 +133,16 @@ const getWeatherHandle = async (e) => {
 }
 // End Get Current Weather
 
-// User IP Address
-const {data:userIp} = await useFetch('https://api.ipify.org/?format=json')
-const {data: userIpDetail} = await useFetch(`http://ip-api.com/json/${userIp.value.ip}`)
-const { data:userCurrentWeather, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&aqi=yes`);
-currentWeather.value = userCurrentWeather.value
+// // User IP Address
+// const {data:userIp} = await useFetch('https://api.ipify.org/?format=json')
+// const {data: userIpDetail} = await useFetch(`http://ip-api.com/json/${userIp.value.ip}`)
+// const { data:userCurrentWeather, error, refresh} = await useFetch(`http://api.weatherapi.com/v1/current.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&aqi=yes`);
+// currentWeather.value = userCurrentWeather.value
 
-const {data:forecastData} = await useFetch(`https://api.weatherapi.com/v1/forecast.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&days=3&aqi=no&alerts=no`)
-console.log(forecastData.value.forecast.forecastday)
-const getForeCast = useForeCast()
-getForeCast.value = forecastData.value.forecast.forecastday
+// const {data:forecastData} = await useFetch(`https://api.weatherapi.com/v1/forecast.json?key=${sicretKey}&q=${userIpDetail.value.city},${userIpDetail.value.regionName},${userIpDetail.value.country}&days=3&aqi=no&alerts=no`)
+// console.log(forecastData.value.forecast?.forecastday)
+// const getForeCast = useForeCast()
+// getForeCast.value = forecastData.value.forecast.forecastday
 
 
 // End User IP Address
